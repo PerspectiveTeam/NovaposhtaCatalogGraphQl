@@ -1,0 +1,22 @@
+{
+    "name": "perspective/module-novaposhtacataloggraphql",
+    "description": "",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "MonteShot",
+            "email": "faqreg@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Perspective\\NovaposhtaCatalogGraphQl\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

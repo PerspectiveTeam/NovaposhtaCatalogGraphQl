@@ -1,0 +1,34 @@
+
+type Query {
+    
+    cityByName (
+            cityByName: String @doc(description: "Query by cityByName.")
+    ) : CityByName @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\CityByName") @doc(description: "Query by Gets City by Name from vault.") ,
+    allCity  : AllCity @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\AllCity") @doc(description: "Query by Get all city from vault.") ,
+    cityById (
+            cityById: String @doc(description: "Query by cityById.")
+    ) : CityById @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\CityById") @doc(description: "Query by Get city by id from vault.") ,
+    cityByCityId (
+            cityByCityId: String @doc(description: "Query by cityByCityId.")
+    ) : CityByCityId @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\CityByCityId") @doc(description: "Query by Get city by city_id from vault.") ,
+}
+
+type CityByName {
+    
+    cityByName  : String  @doc(description: "Query by cityByName.") ,
+}
+
+type AllCity {
+    
+    allCity  : String  @doc(description: "Query by allCity.") ,
+}
+
+type CityById {
+    
+    cityById  : String  @doc(description: "Query by cityById.") ,
+}
+
+type CityByCityId {
+    
+    cityByCityId  : String  @doc(description: "Query by cityByCityId.") ,
+}
