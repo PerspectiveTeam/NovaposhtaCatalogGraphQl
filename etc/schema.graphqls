@@ -1,34 +1,108 @@
-
 type Query {
-    
-    cityByName (
-            cityByName: String @doc(description: "Query by cityByName.")
-    ) : CityByName @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\CityByName") @doc(description: "Query by Gets City by Name from vault.") ,
-    allCity  : AllCity @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\AllCity") @doc(description: "Query by Get all city from vault.") ,
-    cityById (
-            cityById: String @doc(description: "Query by cityById.")
-    ) : CityById @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\CityById") @doc(description: "Query by Get city by id from vault.") ,
-    cityByCityId (
-            cityByCityId: String @doc(description: "Query by cityByCityId.")
-    ) : CityByCityId @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\CityByCityId") @doc(description: "Query by Get city by city_id from vault.") ,
+    novaposhtaWarehouse
+    (
+        filter: NovaposhtaWarehouseFilterInput
+    )
+    :novaposhtaWarehouse @resolver(class:"Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\NovaposhtaWarehouse"),
+    novaposhtaCity
+    (
+        filter: NovaposhtaCityFilterInput,
+    )
+    :novaposhtaCity @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\NovaposhtaCity") @doc(description: "Query by Gets City by Name from vault.") ,
 }
 
-type CityByName {
-    
-    cityByName  : String  @doc(description: "Query by cityByName.") ,
+type novaposhtaWarehouse {
+    warehouseById: OneWarehouseData @doc(description: "Return warehouse data by given id"),
+    listOfWarehousesByCityRef: [WarehouseType] @doc(description: "Return warehouse data by given cityRef and locale"),
 }
 
-type AllCity {
-    
-    allCity  : String  @doc(description: "Query by allCity.") ,
+type OneWarehouseData {
+    id: Int,
+    site_key: Int,
+    description_ua: String,
+    description_ru: String,
+    short_address_ua: String,
+    short_address_ru: String,
+    phone: String,
+    type_of_warehouse: String,
+    ref: String,
+    number_in_city: Int,
+    city_ref: Int,
+    city_description_ua: String,
+    city_description_ru: String,
+    settlement_ref: String,
+    settlement_description: String,
+    settlement_area_description: String,
+    settlement_region_description: String,
+    settlement_type_description: String,
+    longitude: String,
+    latitude: String,
+    post_finance: Int,
+    bicycle_parking: Int,
+    payment_access: Int,
+    pos_terminal: Int,
+    international_shipping: Int,
+    total_max_weigh_tallowed: Int,
+    place_max_weight_allowed: Int,
+    reception: String,
+    delivery: String,
+    schedule: String,
+    district_code: String,
+    warehouse_status: String,
+    category_of_warehouse: String,
 }
 
-type CityById {
-    
-    cityById  : String  @doc(description: "Query by cityById.") ,
+input NovaposhtaWarehouseFilterInput {
+    warehouseById: Int @doc(description: "Input for retrieving data by Id"),
+    listOfWarehousesByCityRef: listOfWarehousesByCityRefInput @doc(description: "Input for retrieving data by Id"),
 }
 
-type CityByCityId {
-    
-    cityByCityId  : String  @doc(description: "Query by cityByCityId.") ,
+input listOfWarehousesByCityRefInput {
+    cityRef:String!, @doc(description: "Can be fetched from novaposhtaCity graphql"),
+    locale:String! = "ru_RU" @doc(description: "Accept only ru_RU or uk_UA"),
+}
+
+type novaposhtaCity {
+    items: [CityType], @doc(description: "Gets all city data that ready to use in select input"),
+    cityById: OneCityData @doc(description: "Gets data for cityById"),
+    cityByCityId: OneCityData @doc(description: "Gets data for cityByCityId"),
+    cityByName: [OneCityData] @doc(description: "Gets data by name")
+}
+
+type OneCityData {
+    id: Int,
+    descriptionua: String,
+    descriptionru: String,
+    ref: String,
+    delivery_1: Boolean,
+    delivery_2: Boolean,
+    delivery_3: Boolean,
+    delivery_4: Boolean,
+    delivery_5: Boolean,
+    delivery_6: Boolean,
+    delivery_7: Boolean,
+    area: String,
+    settlement_type: String,
+    is_branch: Boolean,
+    prevent_entry_new_streets_user: String,
+    conglomerates: String,
+    city_id: Int,
+    settlement_type_description_ru: Int,
+    settlement_type_description_ua: Int,
+}
+
+type CityType @doc(description: "NovaposhtaCity Interface describe items from backend") {
+    label: String,
+    value: String,
+}
+
+type WarehouseType @doc(description: "NovaposhtaWarehouse Interface describe items from backend") {
+    label: String,
+    value: String,
+}
+input NovaposhtaCityFilterInput {
+    allCity: String = "ru_RU" @doc(description: "If add to query this field then all cityList will return"),
+    cityById: Int @doc(description: "Return city by entity_id"),
+    cityByCityId: Int @doc(description: "Return city by city_id"),
+    cityByName: String @doc(description: "Return city by name"),
 }

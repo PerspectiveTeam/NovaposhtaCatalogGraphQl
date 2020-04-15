@@ -10,23 +10,18 @@ use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 
-/**
- * Class CityByCityId
- *
- * @package Perspective\NovaposhtaCatalogGraphQl\Model\Resolver
- */
-class CityByCityId implements ResolverInterface
+class NovaposhtaWarehouse implements ResolverInterface
 {
 
-    private $cityByCityIdDataProvider;
+    private $novaposhtaWarehouseDataProvider;
 
     /**
-     * @param DataProvider\CityByCityId $cityByCityIdRepository
+     * @param DataProvider\NovaposhtaWarehouse $allCityRepository
      */
     public function __construct(
-        DataProvider\CityByCityId $cityByCityIdDataProvider
+        DataProvider\NovaposhtaWarehouse $NovaposhtaWarehouseDataProvider
     ) {
-        $this->cityByCityIdDataProvider = $cityByCityIdDataProvider;
+        $this->novaposhtaWarehouseDataProvider = $NovaposhtaWarehouseDataProvider;
     }
 
     /**
@@ -39,8 +34,8 @@ class CityByCityId implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
-        $cityByCityIdData = $this->cityByCityIdDataProvider->getCityByCityId();
-        return $cityByCityIdData;
+        $cityData = $this->novaposhtaWarehouseDataProvider->Resolve($args);
+        return $cityData;
     }
 }
 
