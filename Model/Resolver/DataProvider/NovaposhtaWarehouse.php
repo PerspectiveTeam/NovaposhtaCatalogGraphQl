@@ -1,7 +1,7 @@
 <?php
 
-
 namespace Perspective\NovaposhtaCatalogGraphQl\Model\Resolver\DataProvider;
+
 /**
  * Class NovaposhtaWarehouse
  */
@@ -42,8 +42,11 @@ class NovaposhtaWarehouse
         if ($this->arrayManager->exists('filter/warehouseById', $args)) {
             $result['warehouseById'] = $this->warehouseRepository->getWarehouseById($this->arrayManager->get('filter/warehouseById', $args))->getData();
         }
+        if ($this->arrayManager->exists('filter/warehouseByWarehouseRef', $args)) {
+            $result['warehouseByWarehouseRef'] = $this->warehouseRepository->getWarehouseByWarehouseRef($this->arrayManager->get('filter/warehouseByWarehouseRef', $args))->getData();
+        }
         if ($this->arrayManager->exists('filter/listOfWarehousesByCityRef', $args)) {
-            $searchResult = $this->warehouseRepository->getListOfWarehousesByCityRef($this->arrayManager->get('filter/listOfWarehousesByCityRef/cityRef', $args),$this->arrayManager->get('filter/listOfWarehousesByCityRef/locale', $args));
+            $searchResult = $this->warehouseRepository->getListOfWarehousesByCityRef($this->arrayManager->get('filter/listOfWarehousesByCityRef/cityRef', $args), $this->arrayManager->get('filter/listOfWarehousesByCityRef/locale', $args));
             if (count($searchResult) === 0) {
                 $result['listOfWarehousesByCityRef'] = null;
             }
@@ -54,4 +57,3 @@ class NovaposhtaWarehouse
         return $result;
     }
 }
-

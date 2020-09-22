@@ -44,8 +44,14 @@ class NovaposhtaCity
         if ($this->arrayManager->exists('filter/allCity', $args)) {
             $result['items'] = $this->cityRepository->getAllCity($this->arrayManager->get('filter/allCity', $args));
         }
+        if ($this->arrayManager->exists('filter/allCityReturnCityId', $args)) {
+            $result['itemsWithId'] = $this->cityRepository->getAllCityReturnCityId($this->arrayManager->get('filter/allCityReturnCityId', $args));
+        }
         if ($this->arrayManager->exists('filter/cityById', $args)) {
             $result['cityById'] = $this->cityRepository->getCityById($this->arrayManager->get('filter/cityById', $args))->getData();
+        }
+        if ($this->arrayManager->exists('filter/cityByCityRef', $args)) {
+            $result['cityByCityRef'] = $this->cityRepository->getCityByCityRef($this->arrayManager->get('filter/cityByCityRef', $args))->getData();
         }
         if ($this->arrayManager->exists('filter/cityByCityId', $args)) {
             $result['cityByCityId'] = $this->cityRepository->getCityByCityId($this->arrayManager->get('filter/cityByCityId', $args))->getData();
