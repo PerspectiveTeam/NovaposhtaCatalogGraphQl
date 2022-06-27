@@ -2,19 +2,22 @@
 
 namespace Perspective\NovaposhtaCatalogGraphQl\Model\Resolver\DataProvider;
 
+use Magento\Framework\Api\SearchCriteriaBuilder;
+
 /**
  * Class NovaposhtaWarehouse
  */
 class NovaposhtaWarehouse
 {
     /**
-     * @var \Magento\Framework\Stdlib\ArrayManager
-     */
-    private $arrayManager;
-    /**
      * @var \Perspective\NovaposhtaCatalog\Api\WarehouseRepositoryInterface
      */
     private $warehouseRepository;
+
+    /**
+     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     */
+    private SearchCriteriaBuilder $searchCriteriaBuilder;
 
     /**
      * NovaposhtaWarehouse constructor.
@@ -23,37 +26,27 @@ class NovaposhtaWarehouse
      */
     public function __construct(
         \Perspective\NovaposhtaCatalog\Api\WarehouseRepositoryInterface $warehouseRepository,
-        \Magento\Framework\Stdlib\ArrayManager $arrayManager
+        SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
-        $this->arrayManager = $arrayManager;
         $this->warehouseRepository = $warehouseRepository;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     /**
      * @param $args array
-     * @return string|void
+     * @return array|void
      */
-    public function Resolve($args)
+    public function resolve($args)
     {
         if ($args == null) {
             return;
         }
         $result = [];
-        if ($this->arrayManager->exists('filter/warehouseById', $args)) {
-            $result['warehouseById'] = $this->warehouseRepository->getWarehouseById($this->arrayManager->get('filter/warehouseById', $args))->getData();
+        $searchCriteria = $this->searchCriteriaBuilder;
+        foreach ($args['filter'] as $key => $value) {
+            $searchCriteria->addFilter($key, $value);
         }
-        if ($this->arrayManager->exists('filter/warehouseByWarehouseRef', $args)) {
-            $result['warehouseByWarehouseRef'] = $this->warehouseRepository->getWarehouseByWarehouseRef($this->arrayManager->get('filter/warehouseByWarehouseRef', $args))->getData();
-        }
-        if ($this->arrayManager->exists('filter/listOfWarehousesByCityRef', $args)) {
-            $searchResult = $this->warehouseRepository->getListOfWarehousesByCityRef($this->arrayManager->get('filter/listOfWarehousesByCityRef/cityRef', $args), $this->arrayManager->get('filter/listOfWarehousesByCityRef/locale', $args));
-            if (count($searchResult) === 0) {
-                $result['listOfWarehousesByCityRef'] = null;
-            }
-            foreach ($searchResult as $idx => $data) {
-                $result['listOfWarehousesByCityRef'][$idx] = $data;
-            }
-        }
+        $result['items'] = $this->warehouseRepository->getList($searchCriteria->create())->getItems();
         return $result;
     }
 }

@@ -9,8 +9,10 @@
             "email": "faqreg@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "perspective/module-novaposhtacatalog": "*",
+        "magento/module-graph-ql": "*"
+    },
     "autoload": {
         "psr-4": {
             "Perspective\\NovaposhtaCatalogGraphQl\\": ""

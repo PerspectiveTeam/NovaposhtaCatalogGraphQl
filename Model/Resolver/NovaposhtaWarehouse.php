@@ -19,9 +19,9 @@ class NovaposhtaWarehouse implements ResolverInterface
      * @param DataProvider\NovaposhtaWarehouse $allCityRepository
      */
     public function __construct(
-        DataProvider\NovaposhtaWarehouse $NovaposhtaWarehouseDataProvider
+        DataProvider\NovaposhtaWarehouse $novaposhtaWarehouseDataProvider
     ) {
-        $this->novaposhtaWarehouseDataProvider = $NovaposhtaWarehouseDataProvider;
+        $this->novaposhtaWarehouseDataProvider = $novaposhtaWarehouseDataProvider;
     }
 
     /**
@@ -34,8 +34,7 @@ class NovaposhtaWarehouse implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
-        $cityData = $this->novaposhtaWarehouseDataProvider->Resolve($args);
-        return $cityData;
+        return $this->novaposhtaWarehouseDataProvider->resolve($args);
     }
 }
 

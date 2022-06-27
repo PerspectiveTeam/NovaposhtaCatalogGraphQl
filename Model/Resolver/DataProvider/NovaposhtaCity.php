@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Perspective\NovaposhtaCatalogGraphQl\Model\Resolver\DataProvider;
-/**
- * Class NovaposhtaCity
- */
+use Magento\Framework\Api\SearchCriteriaBuilder;
+
 class NovaposhtaCity
 {
 
@@ -12,59 +10,36 @@ class NovaposhtaCity
      * @var \Perspective\NovaposhtaCatalog\Api\CityRepositoryInterface
      */
     private $cityRepository;
-    /**
-     * @var \Magento\Framework\Stdlib\ArrayManager
-     */
-    private $arrayManager;
+
+    private SearchCriteriaBuilder $searchCriteriaBuilder;
 
     /**
-     * NovaposhtaCity constructor.
      * @param \Perspective\NovaposhtaCatalog\Api\CityRepositoryInterface $cityRepository
-     * @param \Magento\Framework\Stdlib\ArrayManager $arrayManager
+     * @param \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder
      */
     public function __construct(
         \Perspective\NovaposhtaCatalog\Api\CityRepositoryInterface $cityRepository,
-        \Magento\Framework\Stdlib\ArrayManager $arrayManager
+        SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
-
         $this->cityRepository = $cityRepository;
-        $this->arrayManager = $arrayManager;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     /**
      * @param $args array
-     * @return string|void
+     * @return array|void
      */
-    public function Resolve($args)
+    public function resolve($args)
     {
         if ($args == null) {
             return;
         }
         $result = [];
-        if ($this->arrayManager->exists('filter/allCity', $args)) {
-            $result['items'] = $this->cityRepository->getAllCity($this->arrayManager->get('filter/allCity', $args));
+        $searchCriteria = $this->searchCriteriaBuilder;
+        foreach ($args['filter'] as $key => $value) {
+            $searchCriteria->addFilter($key, $value);
         }
-        if ($this->arrayManager->exists('filter/allCityReturnCityId', $args)) {
-            $result['itemsWithId'] = $this->cityRepository->getAllCityReturnCityId($this->arrayManager->get('filter/allCityReturnCityId', $args));
-        }
-        if ($this->arrayManager->exists('filter/cityById', $args)) {
-            $result['cityById'] = $this->cityRepository->getCityById($this->arrayManager->get('filter/cityById', $args))->getData();
-        }
-        if ($this->arrayManager->exists('filter/cityByCityRef', $args)) {
-            $result['cityByCityRef'] = $this->cityRepository->getCityByCityRef($this->arrayManager->get('filter/cityByCityRef', $args))->getData();
-        }
-        if ($this->arrayManager->exists('filter/cityByCityId', $args)) {
-            $result['cityByCityId'] = $this->cityRepository->getCityByCityId($this->arrayManager->get('filter/cityByCityId', $args))->getData();
-        }
-        if ($this->arrayManager->exists('filter/cityByName', $args)) {
-            $searchResult = $this->cityRepository->getCityByName($this->arrayManager->get('filter/cityByName', $args));
-            if (count($searchResult) === 0) {
-                $result['cityByName'] = null;
-            }
-            foreach ($searchResult as $idx => $data) {
-                $result['cityByName'][$idx] = $data->getData();
-            }
-        }
+        $result['items'] = $this->cityRepository->getList($searchCriteria->create())->getItems();
         return $result;
     }
 }
