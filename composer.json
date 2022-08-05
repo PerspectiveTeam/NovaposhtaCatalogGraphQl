@@ -1,6 +1,7 @@
 {
     "name": "perspective/module-novaposhtacataloggraphql",
     "description": "",
+    "version": "1.0.0",
     "type": "magento2-module",
     "license": "proprietary",
     "authors": [
