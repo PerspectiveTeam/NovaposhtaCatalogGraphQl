@@ -1,7 +1,9 @@
 <?php
 
 namespace Perspective\NovaposhtaCatalogGraphQl\Model\Resolver\DataProvider;
+
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Perspective\NovaposhtaCatalog\Api\CityRepositoryInterface;
 
 class NovaposhtaCity
 {
@@ -18,7 +20,7 @@ class NovaposhtaCity
      * @param \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder
      */
     public function __construct(
-        \Perspective\NovaposhtaCatalog\Api\CityRepositoryInterface $cityRepository,
+        CityRepositoryInterface $cityRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
         $this->cityRepository = $cityRepository;

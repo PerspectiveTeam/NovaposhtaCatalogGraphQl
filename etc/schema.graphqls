@@ -19,23 +19,28 @@ directive @resolver(class: String) on FIELD_DEFINITION
 directive @cache(cacheable: Boolean) on FIELD_DEFINITION
 
 type Mutation {
-    novaposhtaWarehouse
+    novaposhtaWarehouseResponse
     (
-        filter: OneWarehouseDataInput
+        filter: WarehouseEntityInput
     )
-    :novaposhtaWarehouse @resolver(class:"Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\NovaposhtaWarehouse"),
-    novaposhtaCity
+    :novaposhtaWarehouseResponse @resolver(class:"Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\NovaposhtaWarehouse"),
+    novaposhtaCityResponse
     (
-        filter: OneCityDataInput,
+        filter: CityEntityInput,
     )
-    :novaposhtaCity @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\NovaposhtaCity") @doc(description: "Query by Gets City by Name from vault.") ,
+    :novaposhtaCityResponse @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\NovaposhtaCity") @doc(description: "Query for getting Cities by Name from vault.") ,
+    novaposhtaStreet
+    (
+        filter: StreetEntityInput,
+    )
+    :novaposhtaStreetResponse @resolver( class: "Perspective\\NovaposhtaCatalogGraphQl\\Model\\Resolver\\NovaposhtaStreet") @doc(description: "Query for getting Streets in the City by Ref from vault.") ,
 }
 
-type novaposhtaWarehouse {
-    items: [OneWarehouseData] @doc(description: "Return warehouses data list by given params"),
+type novaposhtaWarehouseResponse {
+    items: [WarehouseEntity] @doc(description: "Return warehouses data list by given params"),
 }
 
-type OneWarehouseData {
+type WarehouseEntity {
     id: Int,
     site_key: Int,
     description_ua: String,
@@ -71,11 +76,11 @@ type OneWarehouseData {
     category_of_warehouse: String,
 }
 
-type novaposhtaCity {
-    items: [OneCityData], @doc(description: "Gets all city data that ready to use in select input"),
+type novaposhtaCityResponse {
+    items: [CityEntity], @doc(description: "Gets all city data that ready to use in select input"),
 }
 
-type OneCityData {
+type CityEntity {
     id: Int,
     descriptionua: String,
     descriptionru: String,
@@ -97,7 +102,7 @@ type OneCityData {
     settlement_type_description_ua: Int,
 }
 
-input OneCityDataInput {
+input CityEntityInput {
     id: Int,
     descriptionua: String,
     descriptionru: String,
@@ -118,7 +123,7 @@ input OneCityDataInput {
     settlement_type_description_ru: Int,
     settlement_type_description_ua: Int,
 }
-input OneWarehouseDataInput {
+input WarehouseEntityInput {
     id: Int,
     site_key: Int,
     description_ua: String,
@@ -153,3 +158,23 @@ input OneWarehouseDataInput {
     warehouse_status: String,
     category_of_warehouse: String,
 }
+input StreetEntityInput {
+    id: Int,
+    description: String,
+    ref: String,
+    street_type_ref: String,
+    street_type: String,
+    city_ref: String,
+}
+type novaposhtaStreetResponse {
+    items: [StreetEntity] @doc(description: "Return warehouses data list by given params"),
+}
+type StreetEntity {
+    id: Int,
+    description: String,
+    ref: String,
+    street_type_ref: String,
+    street_type: String,
+    city_ref: String,
+}
+

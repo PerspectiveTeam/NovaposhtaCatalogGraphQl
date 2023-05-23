@@ -3,6 +3,7 @@
 namespace Perspective\NovaposhtaCatalogGraphQl\Model\Resolver\DataProvider;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Perspective\NovaposhtaCatalog\Api\WarehouseRepositoryInterface;
 
 /**
  * Class NovaposhtaWarehouse
@@ -21,11 +22,12 @@ class NovaposhtaWarehouse
 
     /**
      * NovaposhtaWarehouse constructor.
+     *
      * @param \Perspective\NovaposhtaCatalog\Api\WarehouseRepositoryInterface $warehouseRepository
      * @param \Magento\Framework\Stdlib\ArrayManager $arrayManager
      */
     public function __construct(
-        \Perspective\NovaposhtaCatalog\Api\WarehouseRepositoryInterface $warehouseRepository,
+        WarehouseRepositoryInterface $warehouseRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
         $this->warehouseRepository = $warehouseRepository;
