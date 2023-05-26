@@ -1,9 +1,9 @@
 {
-    "name": "perspective/module-novaposhtacataloggraphql",
+    "name": "perspectiveteam/module-novaposhtacataloggraphql",
     "description": "",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "type": "magento2-module",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "MonteShot",
@@ -21,5 +21,11 @@
         "files": [
             "registration.php"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/PerspectiveTeam/NovaposhtaCatalog.git"
+        }
+    ]
 }
