@@ -1,7 +1,7 @@
 {
     "name": "perspectiveteam/module-novaposhtacataloggraphql",
     "description": "",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "type": "magento2-module",
     "license": "MIT",
     "authors": [
@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "perspective/module-novaposhtacatalog": "*",
+        "perspectiveteam/module-novaposhtacatalog": "*",
         "magento/module-graph-ql": "*"
     },
     "autoload": {
